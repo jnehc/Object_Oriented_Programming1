@@ -12,20 +12,65 @@ class Rover
   def to_s
         "(#{@x}, #{@y}), #{@direction}"
   end
+
 # make instance variable as strings
 # http://rubymonk.com/learning/books/4-ruby-primer-ascent/chapters/45-more-
 # classes/lessons/108-displaying-objects  
 
-# " now's  the time".split(' ')   #=> ["now's", "the", "time"]
 
 def takeoff (location)          
+      #method to lock in initial coordinates
       loc_array = location.split("")
       @x = loc_array[0].to_i
       @y = loc_array[1].to_i
       @direction = loc_array[2]
 end
 
-def read_instructions(instructions)
+# assigning the location to loc_array
+# "1,2,,3,4,,".split(',')         #=> ["1", "2", "", "3", "4"]
+
+def turn(turn_direction)
+      if turn_direction == "L"
+              case @direction
+                when "N"
+                @direction = "W"
+                when "S"
+                @direction = "E"
+                when "E"
+                @direction = "N"
+                when "W"
+                @direction = "S"
+              end
+
+      else
+              case @direction
+                when "N"
+                @direction = "E"
+                when "S"
+                @direction = "W"
+                when "E"
+                @direction = "S"
+                when "W"
+                @direction = "N"
+              end
+      end
+
+  end
+
+  def move
+                case @direction
+                when "W"
+                @x -= 1
+                when "N"
+                @y += 1
+                when "S"
+                @y -= 1
+                when "E"
+                @x += 1
+                end
+  end
+
+      def branching(instructions)
         instructions.split("").each do |i|
                 if i == 'M'
                 move
@@ -35,71 +80,16 @@ def read_instructions(instructions)
             puts to_s
             end
       end
-	def move
-	end
-
-	def turn
-		if 
-	end
-
-	def instruct
-	end
-
-
-
-#make an instance of rover starting at (1,2,N) and move it 
-# 'L' and 'R' makes the rover spin 90 degrees left or right respectively, without moving from its current spot.
-# 'M' means move forward one grid point, and maintain the same heading.
-# Assume that the square directly North from (x, y) is (x, y+1).
-
-# states:
-# location (xcord,ycord)
-# orientation (N W E S)
-
-
-
-
-
-# case @direction
-
-#   when "N" ## ycord + 1
-#   when "S" ##ycord - 1
-#   when "W" ##xcord-1
-#   when "E" ##xcord+1
- 
- # when "N" 
- # 	ycord + 1
- # when "S"
- # 	ycord - 1
- # when "W"
- # 	xcord - 1
- # when "E"
- # 	xcord + 1
-
-
-
-
-
-
-
-
-
-
-
-
-define moved object
-
-
-TURN
-Turn Options: N =north, W=west, E=east, S=south
-directions = [N, W, E, S]
-
 end
-#create new instance variables from Rover
-roverman = Rover.new(1,2,N)
-#roverman starting values xcord=1,ycord2, direction=N  
-roverlady = Rover.new(3,3,E)
-#roverlady starting  values xcord=3,ycord3, direction=E
-#move intance around
-#roverman record final coordinates 3-1-N
-#roverlady xecord final coordinates 4-2-N
+roverMama = Rover.new
+roverPapa = Rover.new
+roverMama_startloc = "12N"
+roverMama_directions = "LMLMLMLMM"
+roverPapa_startloc  = "33E"
+roverPapa_directions = "MMRMMRMRRM"
+roverMama.takeoff(roverMama_startloc)
+roverPapa.takeoff(roverPapa_startloc)
+puts "This is how our rovers travelled. Rover number one:"
+roverMama.branching(roverMama_directions)
+puts "And rover number two"
+roverPapa.branching(roverPapa_directions)
