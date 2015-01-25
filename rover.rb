@@ -1,15 +1,22 @@
 class Rover
-attr_accessor :xcord :ycord :direction
 
-def initialize
-     @xcord = xcord
-     @ycord = ycord
-     @direction = direction
-end
+  def initialize(x = 0, y = 0, direction = "N")
+        @x = x
+        @y = y
+        @direction = direction
 
-# method for location (x,y) and direction
-# get currentlocation
-# get direction
+  end
+
+
+
+  def to_s
+        "(#{@x}, #{@y}), #{@direction}"
+  end
+# make instance variable as strings
+# http://rubymonk.com/learning/books/4-ruby-primer-ascent/chapters/45-more-
+# classes/lessons/108-displaying-objects  
+
+# " now's  the time".split(' ')   #=> ["now's", "the", "time"]
 
 def takeoff (location)          
       loc_array = location.split("")
@@ -18,6 +25,16 @@ def takeoff (location)
       @direction = loc_array[2]
 end
 
+def read_instructions(instructions)
+        instructions.split("").each do |i|
+                if i == 'M'
+                move
+                elsif i == 'L' || i == 'R'
+                turn(i)
+                end
+            puts to_s
+            end
+      end
 	def move
 	end
 
